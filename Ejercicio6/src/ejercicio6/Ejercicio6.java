@@ -15,7 +15,11 @@ public class Ejercicio6 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        System.out.println("Oscar Andres Hernandez Ariza");
+        Casa objeto = new Casa();
+        objeto.setDireccion("Avenida Falsa 123");
+        System.out.println("Direccion: "+objeto.getDireccion());
+        
     }
-    
+
 }
