@@ -15,6 +15,10 @@ public class Ejercicio6 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println("Nicolas David Hernandez");
+        Arana objeto = new Arana();
+        objeto.setNombre("Arañita");
+        System.out.println("Nombre : "+objeto.getNombre());
         System.out.println("------PeterD--------");
         Pc objeto=new Pc();
         objeto.setMarca("PCmart");
