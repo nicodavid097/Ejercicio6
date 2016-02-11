@@ -6,6 +6,7 @@
 package edu.co.sena.modelo.dao;
 
 import edu.co.sena.modelo.dto.RegistroEquipo;
+import edu.co.sena.modelo.dto.RegistroEquipoPK;
 import java.util.List;
 
 /**
@@ -16,7 +17,9 @@ public interface RegistroEquipoDAO {
     public List<RegistroEquipo> findAll();
     public String getTableName();
     public void insert(RegistroEquipo re);
-    public void update(RegistroEquipo re);
-    public void deleteForPk();
-    public void deleteAll();
+    public void update(RegistroEquipoPK rePK,RegistroEquipo re);
+    public void update(RegistroEquipoPK rePKViejo,RegistroEquipoPK rePKNuevo);
+    public void deleteForPk(RegistroEquipoPK rePK);
+    public List<RegistroEquipo> findByPK(RegistroEquipoPK rePK);
+    public int count();
 }

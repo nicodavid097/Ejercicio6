@@ -6,6 +6,7 @@
 package edu.co.sena.modelo.dao;
 
 import edu.co.sena.modelo.dto.Cuenta;
+import edu.co.sena.modelo.dto.CuentaPK;
 import java.util.List;
 
 /**
@@ -16,7 +17,9 @@ public interface CuentaDAO {
     public List<Cuenta> findAll();
     public String getTableName();
     public void insert(Cuenta cu);
-    public void update(Cuenta cu);
-    public void deleteForPk();
-    public void deleteAll();
+    public void update(CuentaPK cuepk,Cuenta cu);
+    public void updatepk(CuentaPK cuViejo, CuentaPK cuNuevo);
+    public void deleteForPk(CuentaPK cuepk);
+    public List<Cuenta> findByPK(CuentaPK cuePK);
+    public int count();
 }
