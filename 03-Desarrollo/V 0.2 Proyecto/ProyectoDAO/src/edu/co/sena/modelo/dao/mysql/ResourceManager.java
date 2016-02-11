@@ -17,23 +17,26 @@ import java.sql.SQLException;
  */
 public class ResourceManager {
 
-    private static String URL = "jdbc:mysql://172.16.0.21:3306/online_shop";
+    private static String URL = "jdbc:mysql://192.168.0.105:3306/"
+            + "DB_ENTRY_INDEX";
     private static String USUARIO = "remoto";
     private static String CLAVE = "123456789";
 
-    public static synchronized Connection connection() throws SQLException { 
-        Connection conexion =null;
+    public static Connection getConnection() throws SQLException {
+        Connection conexion = null;
+
         try {
-        conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);  
+            conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
             System.out.println("Se conecto");
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
-        return  conexion;
+        return conexion;
     }
-    public  static void close(Connection con){
+
+    public static void close(Connection con) {
         try {
-            if (con!=null) {
+            if (con != null) {
                 con.close();
                 System.out.println("Se desconecto");
             }
@@ -41,18 +44,20 @@ public class ResourceManager {
             System.out.println(e.toString());
         }
     }
-    public  static void close(PreparedStatement st){
+
+    public static void close(PreparedStatement st) {
         try {
-            if (st!=null) {
+            if (st != null) {
                 st.close();
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
     }
-    public  static void close(ResultSet rs){
+
+    public static void close(ResultSet rs) {
         try {
-            if (rs!=null) {
+            if (rs != null) {
                 rs.close();
             }
         } catch (SQLException e) {
