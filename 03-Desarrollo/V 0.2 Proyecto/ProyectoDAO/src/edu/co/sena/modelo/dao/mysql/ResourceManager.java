@@ -17,15 +17,14 @@ import java.sql.SQLException;
  */
 public class ResourceManager {
 
-    private static String url = "jdbc:mysql://172.16.0.21:3306/online_shop";
-    private static String usuario = "remoto";
-    private static String clave = "123456789";
+    private static String URL = "jdbc:mysql://172.16.0.21:3306/online_shop";
+    private static String USUARIO = "remoto";
+    private static String CLAVE = "123456789";
 
     public static synchronized Connection connection() throws SQLException { 
         Connection conexion =null;
-               
         try {
-        conexion = DriverManager.getConnection(url, usuario, clave);  
+        conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);  
             System.out.println("Se conecto");
         } catch (SQLException e) {
             System.out.println(e.toString());
