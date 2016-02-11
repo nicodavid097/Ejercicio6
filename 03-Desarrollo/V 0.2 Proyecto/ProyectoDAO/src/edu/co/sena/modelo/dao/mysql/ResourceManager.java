@@ -22,14 +22,15 @@ public class ResourceManager {
     private static String USUARIO = "remoto";
     private static String CLAVE = "123456789";
 
+    //se usaran estas variables en otro caso o podriamos dejarlas final?
     public static Connection getConnection() throws SQLException {
         Connection conexion = null;
 
         try {
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("Se conecto");
+            System.out.println("Se Establecio Conexion");
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            System.out.println("Error! : " + e.getMessage());
         }
         return conexion;
     }
@@ -38,10 +39,10 @@ public class ResourceManager {
         try {
             if (con != null) {
                 con.close();
-                System.out.println("Se desconecto");
+                System.out.println("Se Cerro Conexion");
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            System.out.println("Error! : " + e.getMessage());
         }
     }
 
@@ -51,7 +52,7 @@ public class ResourceManager {
                 st.close();
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            System.out.println("Error! : " + e.getMessage());
         }
     }
 
@@ -61,7 +62,7 @@ public class ResourceManager {
                 rs.close();
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            System.out.println("Error! : " + e.getMessage());
         }
     }
 }
