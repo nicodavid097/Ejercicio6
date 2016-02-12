@@ -66,7 +66,6 @@ public class TestEquipoDAOImp {
 
     @Test
     public void pruebaInsert() {
-        //TODO
 
         EquipoDAO equipo = new EquipoDAOImp();
 
@@ -127,7 +126,6 @@ public class TestEquipoDAOImp {
 
     @Test
     public void findByPk() {
-//TODO
 
         EquipoDAO equipoDAO = new EquipoDAOImp();
 
@@ -152,7 +150,7 @@ public class TestEquipoDAOImp {
     @Test
     public void count() {
         EquipoDAO equipo = new EquipoDAOImp();
-        System.out.println("Counts In Equipo : " + equipo.count());
+        System.out.println("Counts En Equipo : " + equipo.count());
     }
 
 }
