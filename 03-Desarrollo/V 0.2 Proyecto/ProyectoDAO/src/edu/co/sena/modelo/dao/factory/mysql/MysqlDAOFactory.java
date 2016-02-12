@@ -23,36 +23,36 @@ import edu.co.sena.modelo.dao.mysql.UsuarioDAOImp;
  *
  * @author Usuario
  */
-public class MysqlDAOFactory implements DAOFactory{
+public class MysqlDAOFactory implements DAOFactory {
 
     @Override
     public UsuarioDAO creaUsuario() {
-    return new UsuarioDAOImp();
-            }
+        return new UsuarioDAOImp();
+    }
 
     @Override
     public RegistroEquipoDAO crearRegistroEquipo() {
-    return new RegistroEquipoDAOImp();
+        return new RegistroEquipoDAOImp();
     }
 
     @Override
     public RegistroDAO crearRegistro() {
-    return new RegistroDAOImp();
+        return new RegistroDAOImp();
     }
 
     @Override
     public PropietarioDAO crearPropietario() {
-    return  new PropietarioDAOImp();
+        return new PropietarioDAOImp();
     }
 
     @Override
     public CuentaDAO crearCuenta() {
-    return new CuentaDAOImp();
+        return new CuentaDAOImp();
     }
 
     @Override
     public EquipoDAO crearEquipo() {
-    return new EquipoDAOImp();
+        return new EquipoDAOImp();
     }
-    
+
 }

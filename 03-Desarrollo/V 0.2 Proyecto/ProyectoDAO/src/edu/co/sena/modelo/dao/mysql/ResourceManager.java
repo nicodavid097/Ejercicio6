@@ -17,18 +17,18 @@ import java.sql.SQLException;
  */
 public class ResourceManager {
 
-    private static String URL = "jdbc:mysql://192.168.0.105:3306/"
+    private static String URL = "jdbc:mysql://localhost/"
             + "DB_ENTRY_INDEX";
-    private static String USUARIO = "remoto";
-    private static String CLAVE = "123456789";
+    private static String USUARIO = "root";
+    private static String CLAVE = "Asasins1997";
 
     //se usaran estas variables en otro caso o podriamos dejarlas final?
+    
     public static Connection getConnection() throws SQLException {
         Connection conexion = null;
 
         try {
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("Se Establecio Conexion");
         } catch (SQLException e) {
             System.out.println("Error! : " + e.getMessage());
         }
@@ -39,7 +39,6 @@ public class ResourceManager {
         try {
             if (con != null) {
                 con.close();
-                System.out.println("Se Cerro Conexion");
             }
         } catch (SQLException e) {
             System.out.println("Error! : " + e.getMessage());

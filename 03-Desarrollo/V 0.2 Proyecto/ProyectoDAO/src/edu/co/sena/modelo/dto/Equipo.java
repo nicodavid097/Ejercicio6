@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author Maritza
  */
 public class Equipo implements Serializable {
- 
+
     private String idEquipo;
     private String descripcion;
     private Boolean estado;
@@ -43,8 +43,5 @@ public class Equipo implements Serializable {
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
-    
-    
-    
-    
+
 }
