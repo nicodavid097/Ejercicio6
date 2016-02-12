@@ -7,7 +7,7 @@ package edu.co.sena.modelo.dto;
 
 import java.io.Serializable;
 import java.sql.Blob;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -107,5 +107,12 @@ public class Cuenta implements Serializable {
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Cuenta{" + "numeroDocumento=" + numeroDocumento + ", tipoDocumento=" + tipoDocumento + ", primeroNombre=" + primeroNombre + ", segundoNombre=" + segundoNombre + ", primerApellido=" + primerApellido + ", segundoApellido=" + segundoApellido + ", cargo=" + cargo + ", foto=" + foto + ", fechaFinalizacion=" + fechaFinalizacion + ", estado=" + estado + '}';
+    }
+    
+    
     
 }
