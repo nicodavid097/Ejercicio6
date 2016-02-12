@@ -105,9 +105,11 @@ public class EquipoDAOImp implements EquipoDAO {
             }
 
             sentencia = conect.prepareStatement(SQL);
+            
             sentencia.setString(1, eq.getIdEquipo());
             sentencia.setString(2, eq.getDescripcion());
             sentencia.setBoolean(3, eq.getEstado());
+            
             resultado = sentencia.executeUpdate();
 
         } catch (SQLException e) {
@@ -124,7 +126,7 @@ public class EquipoDAOImp implements EquipoDAO {
     
     
     
-    private final String SQL_UPDATE = "update db_entry_index.equipo set ?,?,?  where id_equipo = ? ;";
+    private final String SQL_UPDATE = "update db_entry_index."+getTableName()+" set id_equipo= ?,descripcion= ?,estado= ?  where id_equipo = ? ;";
 
     @Override
     public void update(EquipoPK equPK, Equipo eq) {
@@ -151,7 +153,7 @@ public class EquipoDAOImp implements EquipoDAO {
             }
 
             sentencia = conect.prepareStatement(SQL);
-            resultado = sentencia.executeUpdate();
+            
 
             sentencia.setString(1, eq.getIdEquipo());
             sentencia.setString(2, eq.getDescripcion());
@@ -159,6 +161,9 @@ public class EquipoDAOImp implements EquipoDAO {
             
             sentencia.setString(4, equPK.getIdEquipo());
 
+            resultado = sentencia.executeUpdate();
+            
+            
         } catch (SQLException e) {
             System.out.println("Error ! [Update] : " + e.getMessage());
         } finally {
@@ -171,11 +176,58 @@ public class EquipoDAOImp implements EquipoDAO {
         }
 
     }
+    
+    
+    private final String SQL_UPDATE_PK ="update db_entry_index."+getTableName()+" set id_equipo=? where id_equipo=?;";
 
     @Override
     public void update(EquipoPK equPKViejo, EquipoPK eqPKNuevo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      
+        final String SQL = SQL_UPDATE_PK;
+
+        final boolean estaConectado = (conexion != null);
+
+        Connection conect = null;
+
+        PreparedStatement sentencia = null;
+
+        int resultado;
+
+        try {
+//patron singleton :p
+
+            if (estaConectado) {
+                conect = conexion;
+                System.out.println("Se Establecio La Conexion");
+            } else {
+                conect = ResourceManager.getConnection();
+                System.out.println("Se Establecio La Conexion");
+            }
+
+            sentencia = conect.prepareStatement(SQL);
+            
+
+            sentencia.setString(1, eqPKNuevo.getIdEquipo());
+            
+            sentencia.setString(2, equPKViejo.getIdEquipo());
+
+            resultado = sentencia.executeUpdate();
+            
+            
+        } catch (SQLException e) {
+            System.out.println("Error ! [Update] : " + e.getMessage());
+        } finally {
+            ResourceManager.close(sentencia);
+            System.out.println("Se Cerro La Sentencia");
+            if (!estaConectado) {
+                ResourceManager.close(conect);
+                System.out.println("Se Cerro La Conexion");
+            }
+        }
+        
     }
+    
+    
 
     private final String SQL_DELETE_PK = "delete from db_entry_index." + getTableName() + " where  id_equipo = ?;";
 
@@ -203,12 +255,12 @@ public class EquipoDAOImp implements EquipoDAO {
             }
 
             sentencia = conect.prepareStatement(SQL);
-            System.out.println(SQL);
 
-            //debe actualizar el estado
-            resultado = sentencia.executeUpdate();
+            //debe actualizar el estado?
+            
             sentencia.setString(1, equPK.getIdEquipo());
             System.out.println("Se borro");
+            resultado = sentencia.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println("Error ! [DeleteForPk] : " + e.getMessage());
@@ -255,6 +307,7 @@ public class EquipoDAOImp implements EquipoDAO {
             sentencia.setString(1, equPK.getIdEquipo());
 
             resultado = sentencia.executeQuery();
+            
             if (resultado != null) {
                 while (resultado.next()) {
                     Equipo equi = new Equipo();

@@ -79,27 +79,47 @@ public class TestEquipoDAOImp {
         equipo.insert(equipoDto);
 
     }
-    
+
     @Test
-    public void update (){
+    public void update() {
         EquipoDAO equipo = new EquipoDAOImp();
-        
+
         EquipoPK equipopk = new EquipoPK("011089");
-       
-        Equipo equipoDto= new Equipo();
-        
+
+        Equipo equipoDto = new Equipo();
+
         equipoDto.setIdEquipo("0110891");
         equipoDto.setDescripcion("desccripcion nueva 011089");
         equipoDto.setEstado(true);
-        
+
         equipo.update(equipopk, equipoDto);
-      
+    }
+
+    @Test
+    public void updatePk() {
+
+        EquipoDAO equipoDao = new EquipoDAOImp();
+        EquipoPK equipoPkViejo = new EquipoPK("891001");
+        EquipoPK equipoPKNuevo = new EquipoPK("01020304");
+
+        equipoDao.update(equipoPkViejo, equipoPKNuevo);
+
     }
 
     @Test
     public void pruebaDeleteForPk() {
         EquipoDAO equipo = new EquipoDAOImp();
-        EquipoPK equipopk = new EquipoPK("123");
+
+        Equipo equipoDto = new Equipo();
+
+        equipoDto.setIdEquipo("12415815881598589");
+        equipoDto.setDescripcion("Descripcion con id 12415815881598589 :D OPD");
+        equipoDto.setEstado(false);
+        equipo.insert(equipoDto);
+
+        System.out.println("----------------------");
+
+        EquipoPK equipopk = new EquipoPK("12415815881598589");
 
         equipo.deleteForPk(equipopk);
 
@@ -108,20 +128,31 @@ public class TestEquipoDAOImp {
     @Test
     public void findByPk() {
 //TODO
-        EquipoDAO equipoDAO=new EquipoDAOImp();
-        
-        EquipoPK equipopk=new EquipoPK("123");
-        for (Object col : equipoDAO.findByPK(equipopk)) {
-            System.out.println(col.toString());
-            
+
+        EquipoDAO equipoDAO = new EquipoDAOImp();
+
+        EquipoPK equipopk = new EquipoPK("123");
+
+        for (Equipo running : equipoDAO.findByPK(equipopk)) {
+            System.out.println("________________________________________");
+            System.out.println("Id Equipo : " + running.getIdEquipo());
+            System.out.println("Descripcion : " + running.getDescripcion());
+            System.out.print("Estado : ");
+            if (running.getEstado() == true) {
+                System.out.print("Activo \n");
+            } else {
+                System.out.print("In Activo \n");
+            }
+            System.out.println("________________________________________");
+
         }
-        
+
     }
-    
+
     @Test
-    public void count(){
-    EquipoDAO equipo=new EquipoDAOImp();
-        System.out.println("Counts In Equipo : "+equipo.count());
+    public void count() {
+        EquipoDAO equipo = new EquipoDAOImp();
+        System.out.println("Counts In Equipo : " + equipo.count());
     }
 
 }
