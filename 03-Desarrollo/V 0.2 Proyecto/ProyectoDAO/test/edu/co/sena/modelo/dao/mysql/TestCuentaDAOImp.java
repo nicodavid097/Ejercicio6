@@ -6,9 +6,14 @@
 package edu.co.sena.modelo.dao.mysql;
 
 import edu.co.sena.modelo.dao.CuentaDAO;
+import edu.co.sena.modelo.dao.factory.DAOFactory;
+import edu.co.sena.modelo.dao.factory.mysql.MysqlDAOFactory;
 import edu.co.sena.modelo.dto.Cuenta;
 import edu.co.sena.modelo.dto.CuentaPK;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,7 +53,10 @@ public class TestCuentaDAOImp {
     @Test
     public void testFindAll() {
         System.out.println("findAll");
-        CuentaDAO instance = new CuentaDAOImp();
+        
+            DAOFactory fabrica =new MysqlDAOFactory() ;
+        CuentaDAO cuenta1 = fabrica.crearCuenta();
+        CuentaDAO instance = fabrica.crearCuenta();
 
         List<Cuenta> result = instance.findAll();
         
@@ -64,28 +72,42 @@ public class TestCuentaDAOImp {
      */
     @Test
     public void testGetTableName() {
-        System.out.println("getTableName");
-        CuentaDAOImp instance = new CuentaDAOImp();
-        String expResult = "";
-        String result = instance.getTableName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("getTableName");    
+        DAOFactory fabrica =new MysqlDAOFactory() ;
+        CuentaDAO cuenta1 = fabrica.crearCuenta();
+        System.out.println(cuenta1.getTableName());
+      
     }
 
     /**
      * Test of insert method, of class CuentaDAOImp.
      */
     @Test
-    public void testInsert() {
+    public void testInsert(){
         System.out.println("insert");
-        Cuenta cu = null;
-        CuentaDAOImp instance = new CuentaDAOImp();
-        instance.insert(cu);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Cuenta c1=new Cuenta();
+        Calendar cal1=GregorianCalendar.getInstance();
+        cal1.set(2017, cal1.JUNE, 10);
+        
+        DAOFactory fabrica =new MysqlDAOFactory() ;
+        CuentaDAO cuenta1 = fabrica.crearCuenta();
+        
+        c1.setNumeroDocumento("55556667787");
+        c1.setTipoDocumento("C.E");
+        c1.setFoto(null);
+        c1.setPrimeroNombre("Don");
+        c1.setSegundoNombre("Ramon");
+        c1.setPrimerApellido("Perez");
+        c1.setSegundoApellido("Villegas");
+        c1.setCargo("Aprendiz");
+        c1.setFechaFinalizacion(cal1.getTime());
+        c1.setEstado(Boolean.TRUE);
+        
+        cuenta1.insert(c1);
+    
+        
+        
     }
-
     /**
      * Test of update method, of class CuentaDAOImp.
      */

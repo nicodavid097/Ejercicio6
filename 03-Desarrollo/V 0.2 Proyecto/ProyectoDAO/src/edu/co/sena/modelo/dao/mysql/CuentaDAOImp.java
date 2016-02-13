@@ -8,6 +8,7 @@ package edu.co.sena.modelo.dao.mysql;
 import edu.co.sena.modelo.dao.CuentaDAO;
 import edu.co.sena.modelo.dto.Cuenta;
 import edu.co.sena.modelo.dto.CuentaPK;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,17 +23,17 @@ import java.util.List;
  */
 public class CuentaDAOImp implements CuentaDAO {
 
-    private Connection connec = null;
-    Connection conexion = null;
-    
-    private final String SQL_SELLEC_ALL = "select * from DB_ENTRY_INDEX." + getTableName() + ";";
+    Connection connexion = null;
+
+    private final String SQL_SELLEC_ALL = "select * from " + getTableName() + ";";
+    private final String SQL_INSERT = "insert into " + getTableName() + " values(?,?,null,?,?,?,?,?,?,?);";
 
     @Override
     public List<Cuenta> findAll() {
 
-        final boolean estaConectado = (conexion != null);
+        final boolean estaConectado = (connexion != null);
 
-        Connection conect = null;
+        Connection connect = null;
         PreparedStatement sentencia = null;
         ResultSet rs = null;
         List<Cuenta> listaCuenta = new ArrayList<>();
@@ -40,64 +41,94 @@ public class CuentaDAOImp implements CuentaDAO {
         try {
 
             if (estaConectado) {
-                conect = conexion;
-                System.out.println("Se Establecio La Conexion");
+                connect = connexion;
             } else {
-                conect = ResourceManager.getConnection();
-                System.out.println("Se Establecio La Conexion");
+                connect = ResourceManager.getConnection();
             }
 
-            sentencia = conect.prepareStatement(SQL_SELLEC_ALL);
+            sentencia = connect.prepareStatement(SQL_SELLEC_ALL);
             rs = sentencia.executeQuery();
 
-           
             if (!rs.wasNull()) {
                 while (rs.next()) {
-                    int index=1;
+                    int index = 1;
                     Cuenta cuenta = new Cuenta();
-                    
-                    cuenta.setNumeroDocumento(rs.getString(1));
-                    cuenta.setTipoDocumento(rs.getString(2));
-                 /*foto*/   cuenta.setFoto(rs.getBlob(3));
-                    cuenta.setPrimeroNombre(rs.getString(4));
-                    cuenta.setSegundoNombre(rs.getString(5));
-                    cuenta.setPrimerApellido(rs.getString(6));
-                    cuenta.setSegundoApellido(rs.getString(7));
-                    cuenta.setCargo(rs.getString(8));
-                    cuenta.setFechaFinalizacion(rs.getDate(9));
-                    cuenta.setEstado(rs.getBoolean(10));
-                  
+                    cuenta.setNumeroDocumento(rs.getString((index++)));
+                    cuenta.setTipoDocumento(rs.getString((index++)));
+                    /*foto*/ cuenta.setFoto(rs.getBlob((index++)));
+                    cuenta.setPrimeroNombre(rs.getString((index++)));
+                    cuenta.setSegundoNombre(rs.getString((index++)));
+                    cuenta.setPrimerApellido(rs.getString((index++)));
+                    cuenta.setSegundoApellido(rs.getString((index++)));
+                    cuenta.setCargo(rs.getString((index++)));
+                    cuenta.setFechaFinalizacion(rs.getDate((index++)));
+                    cuenta.setEstado(rs.getBoolean((index++)));
+
                     listaCuenta.add(cuenta);
                 }
-               
+
             }
 
         } catch (SQLException e) {
             System.out.println("Error ! [FindAll] : " + e.getMessage());
         } finally {
-            ResourceManager.close(rs);
-            System.out.println("Se Cerro El ResulSet");
+            ResourceManager.close(connect);
             ResourceManager.close(sentencia);
-            System.out.println("Se Cerro La Sentencia");
-            if (!estaConectado) {
-                ResourceManager.close(conect);
-                System.out.println("Se Cerro La Conexion");
-            }
+            ResourceManager.close(rs);
+
         }
         return listaCuenta;
 
     }
 
-    
     @Override
     public String getTableName() {
-
         return "cuenta";
     }
 
     @Override
     public void insert(Cuenta cu) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection connect = null;
+        PreparedStatement sentencia = null;
+        int resultado;
+        int index = 1;
+
+        final boolean estaConectadoh = (connexion != null);
+
+        try {
+            if (estaConectadoh) {
+                connect = connexion;
+            } else {
+                connect = ResourceManager.getConnection();
+            }
+            sentencia = connect.prepareStatement(SQL_INSERT);
+            sentencia.setString(index++, cu.getNumeroDocumento());
+            sentencia.setString(index++, cu.getTipoDocumento());
+            sentencia.setBlob(index, cu.getFoto());
+            sentencia.setString(index++, cu.getPrimeroNombre());
+            sentencia.setString(index++, cu.getSegundoNombre());
+            sentencia.setString(index++, cu.getPrimerApellido());
+            sentencia.setString(index++, cu.getSegundoApellido());
+            sentencia.setString(index++, cu.getCargo());
+            sentencia.setDate(index++, new java.sql.Date(cu.getFechaFinalizacion().getTime()));
+            sentencia.setBoolean(index++, cu.getEstado());
+
+            resultado = sentencia.executeUpdate();
+
+            if (resultado == 1) {
+                System.out.println("Se agrego Exitosamente");
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("Error [Insert]" + e.toString());
+        } finally {
+
+            ResourceManager.close(connect);
+            ResourceManager.close(sentencia);
+
+        }
+
     }
 
     @Override
@@ -124,7 +155,5 @@ public class CuentaDAOImp implements CuentaDAO {
     public int count() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
 
 }
