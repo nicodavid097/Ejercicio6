@@ -8,6 +8,7 @@ package edu.co.sena.modelo.dao.mysql;
 import edu.co.sena.modelo.dao.CuentaDAO;
 import edu.co.sena.modelo.dto.Cuenta;
 import edu.co.sena.modelo.dto.CuentaPK;
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
@@ -25,18 +26,43 @@ public class CuentaDAOImp implements CuentaDAO {
 
     Connection connexion = null;
 
-    private final String SQL_SELLEC_ALL = "select * from " + getTableName() + ";";
-    private final String SQL_INSERT = "insert into " + getTableName() + " values(?,?,null,?,?,?,?,?,?,?);";
+    private final String SQL_SELLEC_ALL = "select * from "
+            + getTableName() + ";";
+    private final String SQL_INSERT = "insert into " + getTableName()
+            + " values(?,?,null,?,?,?,?,?,?,?);";
+    private final String SQL_UPDATE = "update " + getTableName() + "\n"
+            + "set \n"
+            + "foto = ?,\n"
+            + "primer_nombre =?,\n"
+            + "segundo_nombre = ?,\n"
+            + "primer_apellido = ?,\n"
+            + "segundo_apellido = ?,\n"
+            + "cargo = ?,\n"
+            + "fecha_finalizacion = ?,\n"
+            + "estado = ?\n"
+            + "where numero_documento = ? and tipo_documento = ?;";
+
+    private final String SQL_UPDATE_PK = "update " + getTableName() + "\n"
+            + "set\n"
+            + "numero_documento = ?,\n"
+            + "tipo_documento = ?\n"
+            + "where numero_documento = ? and tipo_documento = ?;";
+
+    private final String SQL_DELETE_PK = "delete from " + getTableName() + "\n"
+            + "where numero_documento = ? and tipo_documento = ?;";
+    private final String SQL_SELECT_PK = "select * from "+getTableName()+"\n"
+            +" where numero_documento like ? and tipo_documento like ?;";
+    private final String SQL_SELECT_COUNT="select count(*) from "+getTableName()+" ;";
 
     @Override
     public List<Cuenta> findAll() {
-
-        final boolean estaConectado = (connexion != null);
 
         Connection connect = null;
         PreparedStatement sentencia = null;
         ResultSet rs = null;
         List<Cuenta> listaCuenta = new ArrayList<>();
+        final boolean estaConectado = (connexion != null);
+        Cuenta cuenta;
 
         try {
 
@@ -52,17 +78,17 @@ public class CuentaDAOImp implements CuentaDAO {
             if (!rs.wasNull()) {
                 while (rs.next()) {
                     int index = 1;
-                    Cuenta cuenta = new Cuenta();
-                    cuenta.setNumeroDocumento(rs.getString((index++)));
-                    cuenta.setTipoDocumento(rs.getString((index++)));
-                    /*foto*/ cuenta.setFoto(rs.getBlob((index++)));
-                    cuenta.setPrimeroNombre(rs.getString((index++)));
-                    cuenta.setSegundoNombre(rs.getString((index++)));
-                    cuenta.setPrimerApellido(rs.getString((index++)));
-                    cuenta.setSegundoApellido(rs.getString((index++)));
-                    cuenta.setCargo(rs.getString((index++)));
-                    cuenta.setFechaFinalizacion(rs.getDate((index++)));
-                    cuenta.setEstado(rs.getBoolean((index++)));
+                    cuenta = new Cuenta();
+                    cuenta.setNumeroDocumento(rs.getString(index++));
+                    cuenta.setTipoDocumento(rs.getString(index++));
+                    /*foto*/ cuenta.setFoto(rs.getBlob(index++));
+                    cuenta.setPrimeroNombre(rs.getString(index++));
+                    cuenta.setSegundoNombre(rs.getString(index++));
+                    cuenta.setPrimerApellido(rs.getString(index++));
+                    cuenta.setSegundoApellido(rs.getString(index++));
+                    cuenta.setCargo(rs.getString(index++));
+                    cuenta.setFechaFinalizacion(rs.getDate(index++));
+                    cuenta.setEstado(rs.getBoolean(index++));
 
                     listaCuenta.add(cuenta);
                 }
@@ -92,11 +118,10 @@ public class CuentaDAOImp implements CuentaDAO {
         PreparedStatement sentencia = null;
         int resultado;
         int index = 1;
-
-        final boolean estaConectadoh = (connexion != null);
+        final boolean estaConectado = (connexion != null);
 
         try {
-            if (estaConectadoh) {
+            if (estaConectado) {
                 connect = connexion;
             } else {
                 connect = ResourceManager.getConnection();
@@ -133,27 +158,207 @@ public class CuentaDAOImp implements CuentaDAO {
 
     @Override
     public void update(CuentaPK cuepk, Cuenta cu) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        Connection connect = null;
+        PreparedStatement sentencia = null;
+        int resultado = 0;
+        int index = 1;
+        final boolean estaConectado = (connexion != null);
+
+        try {
+            if (estaConectado) {
+                connect = connexion;
+            } else {
+                connect = ResourceManager.getConnection();
+            }
+
+            sentencia = connect.prepareStatement(SQL_UPDATE);
+            sentencia.setBlob(index++, cu.getFoto());
+            sentencia.setString(index++, cu.getPrimeroNombre());
+            sentencia.setString(index++, cu.getSegundoNombre());
+            sentencia.setString(index++, cu.getPrimerApellido());
+            sentencia.setString(index++, cu.getSegundoApellido());
+            sentencia.setString(index++, cu.getCargo());
+            sentencia.setDate(index++, new Date(cu.getFechaFinalizacion().getTime()));
+            sentencia.setBoolean(index++, cu.getEstado());
+
+            sentencia.setString(index++, cuepk.getNumeroDocumento());
+            sentencia.setString(index++, cuepk.getTipoDocumento());
+
+            resultado = sentencia.executeUpdate();
+
+            if (resultado == 1) {
+                System.out.println("Se actualizo correctamente");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error [Update]: " + e.toString());
+        } finally {
+
+            ResourceManager.close(connect);
+            ResourceManager.close(sentencia);
+
+        }
     }
 
     @Override
     public void updatepk(CuentaPK cuViejo, CuentaPK cuNuevo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final boolean estaConectado = (connexion != null);
+        Connection connect = null;
+        PreparedStatement sentencia = null;
+        int resultado;
+        int index = 1;
+
+        try {
+            if (estaConectado) {
+                connect = connexion;
+            } else {
+                connect = ResourceManager.getConnection();
+            }
+
+            sentencia = connect.prepareStatement(SQL_UPDATE_PK);
+            sentencia.setString(index++, cuNuevo.getNumeroDocumento());
+            sentencia.setString(index++, cuNuevo.getTipoDocumento());
+
+            sentencia.setString(index++, cuViejo.getNumeroDocumento());
+            sentencia.setString(index++, cuViejo.getTipoDocumento());
+
+            resultado = sentencia.executeUpdate();
+
+            if (resultado == 1) {
+                System.out.println("Se actualizo documento exitosamente");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error [UpdatePK]" + e.toString());
+        } finally {
+
+            ResourceManager.close(connect);
+            ResourceManager.close(sentencia);
+
+        }
+
     }
 
     @Override
     public void deleteForPk(CuentaPK cuepk) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        final Boolean estaConectado = (connexion != null);
+        Connection connect = null;
+        PreparedStatement sentencia = null;
+        int resultado;
+        int index = 1;
+
+        try {
+            if (estaConectado) {
+                connect = connexion;
+            } else {
+                connect = ResourceManager.getConnection();
+            }
+
+            sentencia = connect.prepareStatement(SQL_DELETE_PK);
+            sentencia.setString(index++, cuepk.getNumeroDocumento());
+            sentencia.setString(index++, cuepk.getTipoDocumento());
+            resultado = sentencia.executeUpdate();
+            if (resultado == 1) {
+                System.out.println("Se elimino satisfactoriamente");
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error [Delete]: " + e.toString());
+        } finally {
+            ResourceManager.close(sentencia);
+            ResourceManager.close(connect);
+        }
+
     }
 
     @Override
     public List<Cuenta> findByPK(CuentaPK cuePK) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection connect = null;
+        PreparedStatement sentencia = null;
+        ResultSet rs = null;
+        final Boolean estaConectado = (connexion != null);
+        List<Cuenta> resultados=new ArrayList<>();
+        int index=1;
+        
+        Cuenta cuenta;
+        
+        try {
+            if (estaConectado) {
+                connect = connexion;
+            } else {
+                connect = ResourceManager.getConnection();
+            }
+            
+            
+            sentencia=connect.prepareStatement(SQL_SELECT_PK);
+            sentencia.setString(index++, "%"+cuePK.getNumeroDocumento()+"%");
+            sentencia.setString(index++, "%"+cuePK.getTipoDocumento()+"%");
+            rs=sentencia.executeQuery();
+            if (!rs.wasNull()) {
+                while (rs.next()) { 
+                    index=1;
+                    cuenta = new Cuenta();
+                    cuenta.setNumeroDocumento(rs.getString((index++)));
+                    cuenta.setTipoDocumento(rs.getString((index++)));
+                    /*foto*/ cuenta.setFoto(rs.getBlob((index++)));
+                    cuenta.setPrimeroNombre(rs.getString((index++)));
+                    cuenta.setSegundoNombre(rs.getString((index++)));
+                    cuenta.setPrimerApellido(rs.getString((index++)));
+                    cuenta.setSegundoApellido(rs.getString((index++)));
+                    cuenta.setCargo(rs.getString((index++)));
+                    cuenta.setFechaFinalizacion(rs.getDate((index++)));
+                    cuenta.setEstado(rs.getBoolean((index++)));
+
+                    resultados.add(cuenta);
+                    
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error [FindByPK]: " + e.toString());
+        } finally {
+            ResourceManager.close(rs);
+            ResourceManager.close(sentencia);
+            ResourceManager.close(connect);
+        }
+        return resultados;
     }
 
     @Override
     public int count() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection connect=null;
+        PreparedStatement sentencia=null;
+        ResultSet resultado=null;
+        
+        Boolean estaConectaado=(connexion!=null);
+        Integer count=0;
+        
+        try {
+            
+            if (estaConectaado) {
+                connect=connexion;
+            }else{
+            connect=ResourceManager.getConnection();
+            }
+            
+            sentencia=connect.prepareStatement(SQL_SELECT_COUNT);
+            resultado=sentencia.executeQuery();
+            resultado.next();
+           count=Integer.parseInt(resultado.getString(1));
+           
+            
+        } catch (SQLException e) {
+            System.out.println("Error [Count]: "+e.toString());
+
+        }finally {
+            ResourceManager.close(resultado);
+            ResourceManager.close(sentencia);
+            ResourceManager.close(connect);
+        }
+        return count;
     }
 
 }

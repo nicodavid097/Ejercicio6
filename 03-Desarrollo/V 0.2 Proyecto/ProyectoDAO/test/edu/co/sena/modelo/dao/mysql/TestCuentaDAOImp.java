@@ -54,8 +54,7 @@ public class TestCuentaDAOImp {
     public void testFindAll() {
         System.out.println("findAll");
         
-            DAOFactory fabrica =new MysqlDAOFactory() ;
-        CuentaDAO cuenta1 = fabrica.crearCuenta();
+        DAOFactory fabrica =new MysqlDAOFactory() ;
         CuentaDAO instance = fabrica.crearCuenta();
 
         List<Cuenta> result = instance.findAll();
@@ -87,7 +86,7 @@ public class TestCuentaDAOImp {
         System.out.println("insert");
         Cuenta c1=new Cuenta();
         Calendar cal1=GregorianCalendar.getInstance();
-        cal1.set(2017, cal1.JUNE, 10);
+        cal1.set(2017, cal1.JUNE, 11);
         
         DAOFactory fabrica =new MysqlDAOFactory() ;
         CuentaDAO cuenta1 = fabrica.crearCuenta();
@@ -114,12 +113,26 @@ public class TestCuentaDAOImp {
     @Test
     public void testUpdate() {
         System.out.println("update");
-        CuentaPK cuepk = null;
-        Cuenta cu = null;
-        CuentaDAOImp instance = new CuentaDAOImp();
+        CuentaPK cuepk = new CuentaPK("5555666777", "C.E");
+        Calendar cal1=GregorianCalendar.getInstance();
+        cal1.set(2018, cal1.JUNE, 30);
+        
+        Cuenta cu = new Cuenta();
+        cu.setFoto(null);
+        cu.setPrimeroNombre("papito");
+        cu.setSegundoNombre(null);
+        cu.setPrimerApellido("buena vista");
+        cu.setSegundoApellido(null);
+        cu.setCargo("Atrendiz de intercambio");
+        cu.setFechaFinalizacion(cal1.getTime());
+        cu.setEstado(Boolean.FALSE);
+        
+        DAOFactory fabrica=new MysqlDAOFactory();
+        
+        CuentaDAO instance = fabrica.crearCuenta();
+        
         instance.update(cuepk, cu);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -128,12 +141,12 @@ public class TestCuentaDAOImp {
     @Test
     public void testUpdatepk() {
         System.out.println("updatepk");
-        CuentaPK cuViejo = null;
-        CuentaPK cuNuevo = null;
-        CuentaDAOImp instance = new CuentaDAOImp();
+        CuentaPK cuNuevo =new CuentaPK("015343828", "serialN");
+        CuentaPK cuViejo=new CuentaPK("97081623485", "TI");
+        
+        DAOFactory fabrica=new MysqlDAOFactory();
+        CuentaDAO instance = fabrica.crearCuenta();
         instance.updatepk(cuViejo, cuNuevo);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -142,11 +155,12 @@ public class TestCuentaDAOImp {
     @Test
     public void testDeleteForPk() {
         System.out.println("deleteForPk");
-        CuentaPK cuepk = null;
-        CuentaDAOImp instance = new CuentaDAOImp();
+        DAOFactory fabrica=new MysqlDAOFactory();
+        
+        CuentaPK cuepk = new CuentaPK("5555666777", "C.E");
+        CuentaDAO instance = fabrica.crearCuenta();
         instance.deleteForPk(cuepk);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+ 
     }
 
     /**
@@ -155,13 +169,16 @@ public class TestCuentaDAOImp {
     @Test
     public void testFindByPK() {
         System.out.println("findByPK");
-        CuentaPK cuePK = null;
-        CuentaDAOImp instance = new CuentaDAOImp();
-        List<Cuenta> expResult = null;
-        List<Cuenta> result = instance.findByPK(cuePK);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        DAOFactory fabrica =new MysqlDAOFactory() ;
+        CuentaDAO instance = fabrica.crearCuenta();
+        CuentaPK cuenpk =new CuentaPK("10306", "CC");
+
+        List<Cuenta> result = instance.findByPK(cuenpk);
+        
+        for (Cuenta running : result) {
+            System.out.println(running.toString());
+      
+        }
     }
 
     /**
@@ -170,12 +187,9 @@ public class TestCuentaDAOImp {
     @Test
     public void testCount() {
         System.out.println("count");
-        CuentaDAOImp instance = new CuentaDAOImp();
-        int expResult = 0;
-        int result = instance.count();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        DAOFactory fabrica =new MysqlDAOFactory() ;
+        CuentaDAO instance = fabrica.crearCuenta();
+        System.out.println("Count: "+instance.count());
     }
     
 }
