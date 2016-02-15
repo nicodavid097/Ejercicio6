@@ -15,7 +15,8 @@ public class PropietarioPK {
     private String cuentaNumeroDocumento;
     private String cuentaTipoDocumento;
 
-    public PropietarioPK(String equipoIdEquipo, String cuentaNumeroDocumento, String cuentaTipoDocumento) {
+    public PropietarioPK(String equipoIdEquipo, String cuentaNumeroDocumento, 
+            String cuentaTipoDocumento) {
         this.equipoIdEquipo = equipoIdEquipo;
         this.cuentaNumeroDocumento = cuentaNumeroDocumento;
         this.cuentaTipoDocumento = cuentaTipoDocumento;
