@@ -7,6 +7,7 @@ package edu.co.sena.modelo.dto;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -15,8 +16,8 @@ import java.sql.Date;
 public class Registro implements Serializable {
 
     private Integer numeroRegistro;
-    private Date fechaEntrada;
-    private Date fechaSalida;
+    private Timestamp fechaEntrada;
+    private Timestamp fechaSalida;
     private String cuentaNumeroDocumento;
     private String cuentaTipoDocumento;
     private String visita;
@@ -28,22 +29,6 @@ public class Registro implements Serializable {
 
     public void setNumeroRegistro(Integer numeroRegistro) {
         this.numeroRegistro = numeroRegistro;
-    }
-
-    public Date getFechaEntrada() {
-        return fechaEntrada;
-    }
-
-    public void setFechaEntrada(Date fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
-    }
-
-    public Date getFechaSalida() {
-        return fechaSalida;
-    }
-
-    public void setFechaSalida(Date fechaSalida) {
-        this.fechaSalida = fechaSalida;
     }
 
     public String getCuentaNumeroDocumento() {
@@ -76,6 +61,27 @@ public class Registro implements Serializable {
 
     public void setRolVisita(String rolVisita) {
         this.rolVisita = rolVisita;
+    }
+
+    public Timestamp getFechaEntrada() {
+        return fechaEntrada;
+    }
+
+    public void setFechaEntrada(Timestamp fechaEntrada) {
+        this.fechaEntrada = fechaEntrada;
+    }
+
+    public Timestamp getFechaSalida() {
+        return fechaSalida;
+    }
+
+    public void setFechaSalida(Timestamp fechaSalida) {
+        this.fechaSalida = fechaSalida;
+    }
+
+    @Override
+    public String toString() {
+        return "Registro{" + "numeroRegistro=" + numeroRegistro + ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", cuentaNumeroDocumento=" + cuentaNumeroDocumento + ", cuentaTipoDocumento=" + cuentaTipoDocumento + ", visita=" + visita + ", rolVisita=" + rolVisita + '}';
     }
 
 }
