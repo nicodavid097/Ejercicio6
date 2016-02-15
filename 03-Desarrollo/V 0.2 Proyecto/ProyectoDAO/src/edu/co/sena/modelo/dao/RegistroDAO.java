@@ -18,7 +18,7 @@ public interface RegistroDAO {
     public String getTableName();
     public void insert(Registro reg);
     public void update(RegistroPK rePK,Registro reg);
-    public void update(RegistroPK rePKViejo,RegistroPK regPKNuevo);
+    public void updatePK(RegistroPK rePKViejo,RegistroPK regPKNuevo);
     public void deleteForPk(RegistroPK rePK);
     public List<Registro> findByPK(RegistroPK rePK);
     public int count();
