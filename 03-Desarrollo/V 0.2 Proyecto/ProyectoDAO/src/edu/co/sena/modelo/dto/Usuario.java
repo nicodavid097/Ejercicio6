@@ -69,5 +69,10 @@ public class Usuario implements Serializable{
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "correoElectronico=" + correoElectronico + ", contrasena=" + contrasena + ", roll=" + roll + ", cuentaNumeroDocumento=" + cuentaNumeroDocumento + ", cuentaTipoDocumento=" + cuentaTipoDocumento + ", activo=" + activo + '}';
+    }
     
 }
