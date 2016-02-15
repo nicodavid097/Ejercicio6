@@ -263,6 +263,7 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
         }
     }
 
+    
     private final String SQL_FIND_BY_PK = "select * from db_entry_index. " + getTableName() + " where numero_registro= ? and equipo_id_equipo= ?;";
 
     @Override

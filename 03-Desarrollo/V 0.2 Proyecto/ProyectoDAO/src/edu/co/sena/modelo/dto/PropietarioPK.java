@@ -10,9 +10,16 @@ package edu.co.sena.modelo.dto;
  * @author Usuario
  */
 public class PropietarioPK {
- private String equipoIdEquipo; 
- private String cuentaNumeroDocumento;
- private String cuentaTipoDocumento;
+
+    private String equipoIdEquipo;
+    private String cuentaNumeroDocumento;
+    private String cuentaTipoDocumento;
+
+    public PropietarioPK(String equipoIdEquipo, String cuentaNumeroDocumento, String cuentaTipoDocumento) {
+        this.equipoIdEquipo = equipoIdEquipo;
+        this.cuentaNumeroDocumento = cuentaNumeroDocumento;
+        this.cuentaTipoDocumento = cuentaTipoDocumento;
+    }
 
     public String getEquipoIdEquipo() {
         return equipoIdEquipo;
@@ -38,16 +45,9 @@ public class PropietarioPK {
         this.cuentaTipoDocumento = cuentaTipoDocumento;
     }
 
-    public PropietarioPK(String equipoIdEquipo, String cuentaNumeroDocumento, String cuentaTipoDocumento) {
-        this.equipoIdEquipo = equipoIdEquipo;
-        this.cuentaNumeroDocumento = cuentaNumeroDocumento;
-        this.cuentaTipoDocumento = cuentaTipoDocumento;
-    }
-
     @Override
     public String toString() {
         return "PropietarioPK{" + "equipoIdEquipo=" + equipoIdEquipo + ", cuentaNumeroDocumento=" + cuentaNumeroDocumento + ", cuentaTipoDocumento=" + cuentaTipoDocumento + '}';
     }
- 
- 
+
 }

@@ -161,8 +161,8 @@ public class TestRegistroEquipoDAOImpl {
 
         RegistroEquipoPK rePk = new RegistroEquipoPK(3, "312233");
 
-        System.out.println(".-----------------------------------------------.");
         for (RegistroEquipo runner : registroEquipo.findByPK(rePk)) {
+            System.out.println(".-----------------------------------------------.");
             System.out.println("Equipo_Id_Equipo : " + runner.getEquipoIdEquipo());
             System.out.println("NumeroRegistro : " + runner.getNumeroRegistro());
             System.out.println("Fecha_Entrada : " + runner.getFechaEntrada());

@@ -105,11 +105,11 @@ public class EquipoDAOImp implements EquipoDAO {
             }
 
             sentencia = conect.prepareStatement(SQL);
-            
+
             sentencia.setString(1, eq.getIdEquipo());
             sentencia.setString(2, eq.getDescripcion());
             sentencia.setBoolean(3, eq.getEstado());
-            
+
             resultado = sentencia.executeUpdate();
 
         } catch (SQLException e) {
@@ -123,14 +123,12 @@ public class EquipoDAOImp implements EquipoDAO {
             }
         }
     }
-    
-    
-    
-    private final String SQL_UPDATE = "update db_entry_index."+getTableName()+" set id_equipo= ?,descripcion= ?,estado= ?  where id_equipo = ? ;";
+
+    private final String SQL_UPDATE = "update db_entry_index." + getTableName() + " set id_equipo= ?,descripcion= ?,estado= ?  where id_equipo = ? ;";
 
     @Override
     public void update(EquipoPK equPK, Equipo eq) {
-        
+
         final String SQL = SQL_UPDATE;
 
         final boolean estaConectado = (conexion != null);
@@ -153,17 +151,15 @@ public class EquipoDAOImp implements EquipoDAO {
             }
 
             sentencia = conect.prepareStatement(SQL);
-            
 
             sentencia.setString(1, eq.getIdEquipo());
             sentencia.setString(2, eq.getDescripcion());
             sentencia.setBoolean(3, eq.getEstado());
-            
+
             sentencia.setString(4, equPK.getIdEquipo());
 
             resultado = sentencia.executeUpdate();
-            
-            
+
         } catch (SQLException e) {
             System.out.println("Error ! [Update] : " + e.getMessage());
         } finally {
@@ -176,13 +172,12 @@ public class EquipoDAOImp implements EquipoDAO {
         }
 
     }
-    
-    
-    private final String SQL_UPDATE_PK ="update db_entry_index."+getTableName()+" set id_equipo=? where id_equipo=?;";
+
+    private final String SQL_UPDATE_PK = "update db_entry_index." + getTableName() + " set id_equipo=? where id_equipo=?;";
 
     @Override
     public void update(EquipoPK equPKViejo, EquipoPK eqPKNuevo) {
-      
+
         final String SQL = SQL_UPDATE_PK;
 
         final boolean estaConectado = (conexion != null);
@@ -205,15 +200,13 @@ public class EquipoDAOImp implements EquipoDAO {
             }
 
             sentencia = conect.prepareStatement(SQL);
-            
 
             sentencia.setString(1, eqPKNuevo.getIdEquipo());
-            
+
             sentencia.setString(2, equPKViejo.getIdEquipo());
 
             resultado = sentencia.executeUpdate();
-            
-            
+
         } catch (SQLException e) {
             System.out.println("Error ! [Update] : " + e.getMessage());
         } finally {
@@ -224,10 +217,8 @@ public class EquipoDAOImp implements EquipoDAO {
                 System.out.println("Se Cerro La Conexion");
             }
         }
-        
+
     }
-    
-    
 
     private final String SQL_DELETE_PK = "delete from db_entry_index." + getTableName() + " where  id_equipo = ?;";
 
@@ -257,7 +248,6 @@ public class EquipoDAOImp implements EquipoDAO {
             sentencia = conect.prepareStatement(SQL);
 
             //debe actualizar el estado?
-            
             sentencia.setString(1, equPK.getIdEquipo());
             System.out.println("Se borro");
             resultado = sentencia.executeUpdate();
@@ -306,7 +296,7 @@ public class EquipoDAOImp implements EquipoDAO {
             sentencia.setString(1, equPK.getIdEquipo());
 
             resultado = sentencia.executeQuery();
-            
+
             if (resultado != null) {
                 while (resultado.next()) {
                     Equipo equi = new Equipo();
