@@ -163,7 +163,7 @@ public class RegistroEquipoDAOImp implements RegistroEquipoDAO {
             System.out.println("Error ! [Update] : " + e.getMessage());
         } finally {
             ResourceManager.close(sentencia);
-            System.out.println("Se Cerro La Sentencia");
+            System.out.println("Se Cerro La Sentencia.");
             if (!estaConectado) {
                 ResourceManager.close(conect);
                 System.out.println("Se Cerro La Conexion");

@@ -44,8 +44,8 @@ public class TestResourseManager {
     //
     @Test
     public void hello() throws SQLException {
-        Connection con;
-        con = ResourceManager.getConnection();
-        ResourceManager.close(con);
+        Connection connection;
+        connection = ResourceManager.getConnection();
+        ResourceManager.close(connection);
     }
 }
