@@ -6,7 +6,7 @@
 package edu.co.sena.modelo.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -15,9 +15,9 @@ import java.sql.Date;
 public class RegistroEquipo implements Serializable {
 
     private Integer numeroRegistro;
-    private String fechaEntrada;
-    private Integer equipoIdEquipo;
-    private String fechaSalida;
+    private Timestamp fechaEntrada;
+    private String equipoIdEquipo;
+    private Timestamp fechaSalida;
 
     public Integer getNumeroRegistro() {
         return numeroRegistro;
@@ -27,30 +27,37 @@ public class RegistroEquipo implements Serializable {
         this.numeroRegistro = numeroRegistro;
     }
 
-    public String getFechaEntrada() {
-        return fechaEntrada;
-    }
 
-    public void setFechaEntrada(String fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
-    }
-
-    public Integer getEquipoIdEquipo() {
+    public String getEquipoIdEquipo() {
         return equipoIdEquipo;
     }
 
-    public void setEquipoIdEquipo(Integer equipoIdEquipo) {
+    public void setEquipoIdEquipo(String equipoIdEquipo) {
         this.equipoIdEquipo = equipoIdEquipo;
     }
 
-    public String getFechaSalida() {
+    public Timestamp getFechaEntrada() {
+        return fechaEntrada;
+    }
+
+    public void setFechaEntrada(Timestamp fechaEntrada) {
+        this.fechaEntrada = fechaEntrada;
+    }
+
+    public Timestamp getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(String fechaSalida) {
+    public void setFechaSalida(Timestamp fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
-    
+
+    @Override
+    public String toString() {
+        return "RegistroEquipo{" + "numeroRegistro=" + numeroRegistro + ", fechaEntrada=" + fechaEntrada + ", equipoIdEquipo=" + equipoIdEquipo + ", fechaSalida=" + fechaSalida + '}';
+    }
+
+ 
     
 
 }

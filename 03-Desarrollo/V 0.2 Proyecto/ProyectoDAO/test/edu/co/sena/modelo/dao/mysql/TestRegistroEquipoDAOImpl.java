@@ -12,6 +12,9 @@ import edu.co.sena.modelo.dto.Registro;
 import edu.co.sena.modelo.dto.RegistroEquipo;
 import edu.co.sena.modelo.dto.RegistroEquipoPK;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,7 +49,7 @@ public class TestRegistroEquipoDAOImpl {
     }
 
     @Test
-    public void pruebaFinAll() {
+    public void pruebaFindAll() {
 
         RegistroEquipoDAO registroEquipo = new RegistroEquipoDAOImp();
 
@@ -62,7 +65,6 @@ public class TestRegistroEquipoDAOImpl {
 
     @Test
     public void pruebaInsert() {
-        /*   AVERIGUAR COMO SETEAR DATOS 'Date' DESDE IDE */
         try {
             RegistroEquipoDAO registroEquipoDAO = new RegistroEquipoDAOImp();
             RegistroEquipo reguistroEquipo = new RegistroEquipo();
@@ -73,10 +75,17 @@ public class TestRegistroEquipoDAOImpl {
             Equipo equi = new Equipo();
             equi.setIdEquipo("112233");
 
-            reguistroEquipo.setEquipoIdEquipo(Integer.parseInt(equi.getIdEquipo()));
-            reguistroEquipo.setFechaEntrada("2015-12-11 12:04:00");
+            Calendar c1 = GregorianCalendar.getInstance();
+            c1.set(2015, 10, 17, 15, 50, 20);
+            Calendar c2 = GregorianCalendar.getInstance();
+            c2.set(2018, 10, 17, 15, 50, 20);
+            Timestamp t1 = new Timestamp(c1.getTimeInMillis());
+            Timestamp t2 = new Timestamp(c2.getTimeInMillis());
+
+            reguistroEquipo.setEquipoIdEquipo(equi.getIdEquipo());
+            reguistroEquipo.setFechaEntrada(t1);
             reguistroEquipo.setNumeroRegistro(regist.getNumeroRegistro());
-            reguistroEquipo.setFechaSalida("2015-12-11 06:45:00");
+            reguistroEquipo.setFechaSalida(t2);
 
             registroEquipoDAO.insert(reguistroEquipo);
         } catch (Exception e) {
@@ -85,34 +94,85 @@ public class TestRegistroEquipoDAOImpl {
 
     }
 
-//    @Test
-//    public void pruebaUpdate (){
-//        
-//        // enrealidad poara que se actualiza el registro equipo...? 0.o como mrd?
-//        //deberia solo actualizarse el id y numero de registro 
-//        
-//        RegistroEquipoDAO registroEquipo=new RegistroEquipoDAOImp();
-//        
-//        RegistroEquipo registroDTO=new RegistroEquipo();
-//        
-//            Registro regist = new Registro();
-//            regist.setNumeroRegistro(42);
-//
-//            Equipo equi = new Equipo();
-//            equi.setIdEquipo("31223343");
-//        
-//        
-//        registroDTO.setEquipoIdEquipo(regist.getNumeroRegistro());
-//        registroDTO.setNumeroRegistro(Integer.parseInt(equi.getIdEquipo()));
-//        
-//        RegistroEquipoPK reguistroEquiPK=new RegistroEquipoPK("2015-12-11 12:04:00");
-//        
-//        registroEquipo.update(reguistroEquiPK, registroDTO);
-//    }
+    @Test
+    public void pruebaUpdate() {
+
+        RegistroEquipoDAO registroEquipo = new RegistroEquipoDAOImp();
+
+        RegistroEquipo registroDTO = new RegistroEquipo();
+
+        Registro regist = new Registro();
+        regist.setNumeroRegistro(1);
+
+        Equipo equi = new Equipo();
+        equi.setIdEquipo("112233");
+
+        Calendar c1 = GregorianCalendar.getInstance();
+        c1.set(2015, 10, 17, 15, 50, 20);
+
+        Calendar c2 = GregorianCalendar.getInstance();
+        c2.set(2018, 10, 17, 15, 50, 20);
+        Timestamp t1 = new Timestamp(c1.getTimeInMillis());
+
+        Timestamp t2 = new Timestamp(c2.getTimeInMillis());
+
+        RegistroEquipoPK rePk = new RegistroEquipoPK(1, "112233");
+
+        registroDTO.setFechaEntrada(t1);
+        registroDTO.setFechaSalida(t2);
+
+        registroEquipo.update(rePk, registroDTO);
+    }
+
+    @Test
+    public void pruebaUpdatePk() {
+        RegistroEquipoDAO registroEquipo = new RegistroEquipoDAOImp();
+
+        RegistroEquipo registroDTO = new RegistroEquipo();
+        RegistroEquipoPK rePk = new RegistroEquipoPK(1, "112233");
+
+        registroDTO.setEquipoIdEquipo("13451");
+        registroDTO.setNumeroRegistro(12);
+
+        Calendar c2 = GregorianCalendar.getInstance();
+        c2.set(2018, 10, 17, 15, 50, 20);
+
+        Timestamp t2 = new Timestamp(c2.getTimeInMillis());
+
+        registroDTO.setFechaEntrada(t2);
+
+        registroEquipo.update(rePk, registroDTO);
+
+    }
+
+    @Test
+    public void pruebaDeletePk() {
+        RegistroEquipoDAO registroEquipo = new RegistroEquipoDAOImp();
+
+        RegistroEquipoPK rePk = new RegistroEquipoPK(1, "112233");
+
+        registroEquipo.deleteForPk(rePk);
+
+    }
+
+    @Test
+    public void pruebaFinByPK() {
+        RegistroEquipoDAO registroEquipo = new RegistroEquipoDAOImp();
+
+        RegistroEquipoPK rePk = new RegistroEquipoPK(3, "312233");
+
+        System.out.println(".-----------------------------------------------.");
+        for (RegistroEquipo runner : registroEquipo.findByPK(rePk)) {
+            System.out.println("Equipo_Id_Equipo : " + runner.getEquipoIdEquipo());
+            System.out.println("NumeroRegistro : " + runner.getNumeroRegistro());
+            System.out.println("Fecha_Entrada : " + runner.getFechaEntrada());
+            System.out.println("Fecha_Salida : " + runner.getFechaSalida());
+        }
+    }
+
     @Test
     public void pruebaCount() {
         RegistroEquipoDAO regui = new RegistroEquipoDAOImp();
-
         System.out.print(regui.count());
     }
 

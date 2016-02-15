@@ -275,7 +275,6 @@ public class EquipoDAOImp implements EquipoDAO {
     }
 
     private final String SQL_FIND_BY_PK = "select * from db_entry_index. " + getTableName() + " where id_equipo = ?;";
-//TODO
 
     @Override
     public List<Equipo> findByPK(EquipoPK equPK) {

@@ -14,23 +14,12 @@ import java.sql.Time;
  */
 public class RegistroEquipoPK {
     private int numeroRegistro;
-    private String fechaEntrada;
-    private Time horaEntrada;
+
+
     private String equipoIdEquipo;
 
-    public Time getHoraEntrada() {
-        return horaEntrada;
-    }
-
-    public void setHoraEntrada(Time horaEntrada) {
-        this.horaEntrada = horaEntrada;
-    }
-    
-
-    public RegistroEquipoPK(int numeroRegistro, String fechaEntrada,Time horaEntrada, String equipoIdEquipo) {
+    public RegistroEquipoPK(int numeroRegistro, String equipoIdEquipo) {
         this.numeroRegistro = numeroRegistro;
-        this.fechaEntrada = fechaEntrada;
-        this.horaEntrada = horaEntrada;
         this.equipoIdEquipo = equipoIdEquipo;
     }
 
@@ -42,14 +31,6 @@ public class RegistroEquipoPK {
         this.numeroRegistro = numeroRegistro;
     }
 
-    public String getFechaEntrada() {
-        return fechaEntrada;
-    }
-
-    public void setFechaEntrada(String fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
-    }
-
     public String getEquipoIdEquipo() {
         return equipoIdEquipo;
     }
@@ -57,5 +38,6 @@ public class RegistroEquipoPK {
     public void setEquipoIdEquipo(String equipoIdEquipo) {
         this.equipoIdEquipo = equipoIdEquipo;
     }
+
     
 }

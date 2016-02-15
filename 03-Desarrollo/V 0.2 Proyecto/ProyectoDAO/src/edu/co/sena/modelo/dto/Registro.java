@@ -6,7 +6,7 @@
 package edu.co.sena.modelo.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
+
 import java.sql.Timestamp;
 
 /**

@@ -20,7 +20,7 @@ public class ResourceManager {
     private static String URL = "jdbc:mysql://localhost/"
             + "DB_ENTRY_INDEX";
     private static String USUARIO = "root";
-    private static String CLAVE = "Asasins1997";
+    private static String CLAVE = "123456789";
 
     //se usaran estas variables en otro caso o podriamos dejarlas final?
     
