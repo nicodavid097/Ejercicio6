@@ -91,7 +91,7 @@ public class TestCuentaDAOImp {
         DAOFactory fabrica =new MysqlDAOFactory() ;
         CuentaDAO cuenta1 = fabrica.crearCuenta();
         
-        c1.setNumeroDocumento("55556667787");
+        c1.setNumeroDocumento("a55556667787");
         c1.setTipoDocumento("C.E");
         c1.setFoto(null);
         c1.setPrimeroNombre("Don");

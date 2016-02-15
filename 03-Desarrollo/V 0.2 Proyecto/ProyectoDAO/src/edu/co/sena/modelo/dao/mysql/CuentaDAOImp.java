@@ -8,8 +8,6 @@ package edu.co.sena.modelo.dao.mysql;
 import edu.co.sena.modelo.dao.CuentaDAO;
 import edu.co.sena.modelo.dto.Cuenta;
 import edu.co.sena.modelo.dto.CuentaPK;
-import java.math.BigDecimal;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -29,7 +27,7 @@ public class CuentaDAOImp implements CuentaDAO {
     private final String SQL_SELLEC_ALL = "select * from "
             + getTableName() + ";";
     private final String SQL_INSERT = "insert into " + getTableName()
-            + " values(?,?,null,?,?,?,?,?,?,?);";
+            + " values(?,?,?,?,?,?,?,?,?,?);";
     private final String SQL_UPDATE = "update " + getTableName() + "\n"
             + "set \n"
             + "foto = ?,\n"
@@ -129,7 +127,7 @@ public class CuentaDAOImp implements CuentaDAO {
             sentencia = connect.prepareStatement(SQL_INSERT);
             sentencia.setString(index++, cu.getNumeroDocumento());
             sentencia.setString(index++, cu.getTipoDocumento());
-            sentencia.setBlob(index, cu.getFoto());
+            sentencia.setBlob(index++, cu.getFoto());
             sentencia.setString(index++, cu.getPrimeroNombre());
             sentencia.setString(index++, cu.getSegundoNombre());
             sentencia.setString(index++, cu.getPrimerApellido());
