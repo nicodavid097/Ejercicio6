@@ -14,7 +14,7 @@ import java.sql.Time;
  */
 public class RegistroEquipoPK {
     private int numeroRegistro;
-    private Date fechaEntrada;
+    private String fechaEntrada;
     private Time horaEntrada;
     private String equipoIdEquipo;
 
@@ -27,7 +27,7 @@ public class RegistroEquipoPK {
     }
     
 
-    public RegistroEquipoPK(int numeroRegistro, Date fechaEntrada,Time horaEntrada, String equipoIdEquipo) {
+    public RegistroEquipoPK(int numeroRegistro, String fechaEntrada,Time horaEntrada, String equipoIdEquipo) {
         this.numeroRegistro = numeroRegistro;
         this.fechaEntrada = fechaEntrada;
         this.horaEntrada = horaEntrada;
@@ -42,11 +42,11 @@ public class RegistroEquipoPK {
         this.numeroRegistro = numeroRegistro;
     }
 
-    public Date getFechaEntrada() {
+    public String getFechaEntrada() {
         return fechaEntrada;
     }
 
-    public void setFechaEntrada(Date fechaEntrada) {
+    public void setFechaEntrada(String fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
     }
 

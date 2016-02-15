@@ -15,9 +15,9 @@ import java.sql.Date;
 public class RegistroEquipo implements Serializable {
 
     private Integer numeroRegistro;
-    private Date fechaEntrada;
+    private String fechaEntrada;
     private Integer equipoIdEquipo;
-    private Date fechaSalida;
+    private String fechaSalida;
 
     public Integer getNumeroRegistro() {
         return numeroRegistro;
@@ -27,11 +27,11 @@ public class RegistroEquipo implements Serializable {
         this.numeroRegistro = numeroRegistro;
     }
 
-    public Date getFechaEntrada() {
+    public String getFechaEntrada() {
         return fechaEntrada;
     }
 
-    public void setFechaEntrada(Date fechaEntrada) {
+    public void setFechaEntrada(String fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
     }
 
@@ -43,11 +43,11 @@ public class RegistroEquipo implements Serializable {
         this.equipoIdEquipo = equipoIdEquipo;
     }
 
-    public Date getFechaSalida() {
+    public String getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(Date fechaSalida) {
+    public void setFechaSalida(String fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
     
