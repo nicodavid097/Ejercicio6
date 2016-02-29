@@ -48,7 +48,7 @@ public class ResourceManagerTest {
     public void testConectar() throws SQLException {
         Connection rs =null;
         try {
-      rs = ResourceManager.connection();      
+      rs = ResourceManager.getConnection();      
         } catch (SQLException e) {
         e.toString();
         }finally{
@@ -67,7 +67,7 @@ public class ResourceManagerTest {
     ResultSet rs=null;
     String sql="select*from catalogo;";    
     try {
-        con = ResourceManager.connection();
+        con = ResourceManager.getConnection();
         st = con.prepareStatement(sql);
             rs = st.executeQuery();
             while (rs.next()) {            
